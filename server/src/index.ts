@@ -1,13 +1,20 @@
-import { Elysia } from 'elysia';
+import { Hono } from 'hono';
 import { db, initialise } from './db';
-import { getUser } from './handlers/users';
+import users from './handlers/users';
+import auth from './handlers/auth';
 
 db.exec("PRAGMA journal_mode = WAL;");
 initialise();
 
-const app = new Elysia({ prefix: '/users' })
-    .get('/', () => "Hello")
-	.get('/:id', ({ params: {id} }) => getUser(id))
-	.listen(8080)
+const app = new Hono();
 
-console.log(`🦊 Elysia is running at on port ${app.server?.port}...`)
+app.notFound((c) => {
+	return c.text('Sorry there is nothing here', 404)
+});
+app.route('/users', users);
+app.route('/auth', auth);
+
+export default { 
+	port: 8000, 
+	fetch: app.fetch, 
+};

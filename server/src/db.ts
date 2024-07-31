@@ -3,32 +3,33 @@ import { Database } from "bun:sqlite";
 export const db = new Database("db.sqlite", { create: true });
 
 export function initialise(){
-    const check = (`
+    const check = `
         SELECT EXISTS (
             SELECT 1 FROM sqlite_master 
             WHERE type='table' AND name='users'
         ) AS table_exists;    
-    `);
+    `;
     
-    const result = db.query(check).get();
+    const result = db.query(check).get() as { table_exists: number };
     const tableExists = result.table_exists === 1;
 
     if (!tableExists){
-        const init = (`
+        const init = `
             CREATE TABLE users (
+                Id text NOT NULL UNIQUE,
                 Name text NOT NULL UNIQUE,
-                Password int NOT NULL,
+                Password text NOT NULL,
                 Avatar text,
                 PRIMARY KEY (Name)
             );
-        `);
+        `;
 
-        const addUser = (`
-            INSERT INTO users (Name, Password, Avatar)
-            VALUES ('Jordan', 1234, '/avatars/jake.jpg');
-        `);
+        const addUser = `
+            INSERT INTO users (Id, Name, Password, Avatar)
+            VALUES ('cqkob67a2d5722hu60o0', 'Jordan', '1234', '/avatars/jake.jpg');
+        `;
         
-        db.query(init);
-        db.query(addUser);
+        db.query(init).run();
+        db.query(addUser).run();
     }
 };
