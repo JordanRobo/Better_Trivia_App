@@ -1,0 +1,42 @@
+# Version control
+.git
+.gitignore
+
+# Dependency directories
+**/node_modules
+
+# Sveltekit build output
+client/build
+
+# Pocketbase data and logs
+pb/pb_data
+pb/pb_migrations
+*.log
+
+# Editor directories and files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Test files
+**/__tests__
+**/*.test.js
+**/*.spec.js
+
+# Documentation
+*.md
+LICENSE
+
+# Temporary files
+*.tmp
+*.temp

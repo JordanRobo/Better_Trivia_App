@@ -2,7 +2,7 @@
     import { createEventDispatcher } from 'svelte';
 
     export let value: string = '';
-    export let length: number = 4;
+    export let length: number = 5;
 
     const dispatch = createEventDispatcher<{
         input: { value: string };
@@ -53,6 +53,6 @@
 
 <div class="flex mx-auto gap-1">
     {#each Array(length) as _, i}
-        <input type="password" class="input input-bordered w-12 h-12 focus:border-primary text-center" maxlength="1" on:input={(e) => handleInput(e, i)} on:keydown={(e) => handleKeydown(e, i)} bind:this={inputs[i]} value={value[i] || ''} />
+        <input type="password" class="input input-ghost input-secondary input-bordered w-12 h-12 focus:border-primary text-center" maxlength="1" on:input={(e) => handleInput(e, i)} on:keydown={(e) => handleKeydown(e, i)} bind:this={inputs[i]} value={value[i] || ''} />
     {/each}
 </div>
